@@ -66,20 +66,10 @@ RUN echo 'source "$SDKMAN_DIR/bin/sdkman-init.sh"' >> /root/.bashrc
 
 
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
-COPY utils/logger.sh /usr/local/bin/logger.sh
-COPY utils/fetch-and-trust-cert.sh /usr/local/bin/fetch-and-trust-cert.sh
-COPY utils/configure-nexus-connection.sh /usr/local/bin/configure-nexus-connection.sh
-COPY utils/create-empty-p12.sh /usr/local/bin/create-empty-p12.sh
-COPY utils/validate_maven_connection.sh /usr/local/bin/validate_maven_connection.sh
-
-
-RUN chmod +x /usr/local/bin/logger.sh && \
-    chmod +x /usr/local/bin/entrypoint.sh && \
-    chmod +x /usr/local/bin/fetch-and-trust-cert.sh && \
-    chmod +x /usr/local/bin/configure-nexus-connection.sh && \
-    chmod +x /usr/local/bin/create-empty-p12.sh  && \
-    chmod +x /usr/local/bin/validate_maven_connection.sh
+COPY container/bin/ /usr/local/bin/
+COPY container/libexec /usr/local/libexec
+COPY container/entrypoint.d/ entrypoint.d/
+RUN chmod +x /usr/local/bin/*
 
 EXPOSE 22
 
@@ -87,4 +77,3 @@ USER devuser
 
 
 CMD ["/usr/local/bin/entrypoint.sh"]
-#CMD ["/usr/sbin/sshd", "-D"]

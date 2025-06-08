@@ -59,7 +59,7 @@ if check_required_vars "NEXUS" "${NEXUS_VARS[@]}"; then
   
   /usr/local/bin/validate_maven_connection.sh
 else
-  log_notice "[NEXUS] Variabili mancanti. skipped"
+  log_notice "[NEXUS] Missing variables. skipped"
 fi
 
 

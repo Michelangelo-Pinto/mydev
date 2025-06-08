@@ -11,6 +11,7 @@ services:
     volumes:
       - ../workspaces:/workspaces
       - ../.m2/settings.xml:/home/devuser/.m2/settings.xml:ro
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "2222:22"
     extra_hosts:
