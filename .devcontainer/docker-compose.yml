@@ -10,7 +10,8 @@ services:
       - dev.env
     volumes:
       - ../workspaces:/workspaces
-      - ../.m2/settings.xml:/home/devuser/.m2/settings.xml:ro
+      - ../.m2:/home/devuser/.m2:rw
+      #TODO .m2 is mounted as root 777. we don't like this
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "2222:22"

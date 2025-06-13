@@ -56,6 +56,12 @@ RUN useradd -ms /bin/bash devuser && \
     usermod -aG docker devuser && \
     echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+
+# Crea gruppo docker e utente dev
+#RUN groupadd --gid ${DOCKER_GID} docker \
+# && useradd -m -s /bin/bash --uid ${USER_UID} --gid ${USER_GID} ${USERNAME} \
+# && usermod -aG docker ${USERNAME}
+
 # Configure SSH access
 RUN mkdir /var/run/sshd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
@@ -66,6 +72,7 @@ RUN echo 'source "$SDKMAN_DIR/bin/sdkman-init.sh"' >> /root/.bashrc
 
 
 
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY container/bin/ /usr/local/bin/
 COPY container/libexec /usr/local/libexec
 COPY container/entrypoint.d/ entrypoint.d/
