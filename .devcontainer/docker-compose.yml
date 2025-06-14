@@ -19,3 +19,6 @@ services:
       - "host.docker.internal:host-gateway"
 
 #TODO .m2 is mounted as root 777. we don't like this
+
+volumes:
+  devuser-home:
