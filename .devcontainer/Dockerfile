@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
     python3 python3-pip \
     nodejs npm \
     openssl \
-    #xmllint
+    xmllint \
     libxml2-utils \ 
     vim \
     jq \
@@ -65,7 +65,8 @@ RUN useradd -ms /bin/bash devuser && \
 # Configure SSH access
 RUN mkdir /var/run/sshd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+    echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config && \
+    ssh-keygen -A
 
 # Auto-load SDKMAN in bash
 RUN echo 'source "$SDKMAN_DIR/bin/sdkman-init.sh"' >> /root/.bashrc
