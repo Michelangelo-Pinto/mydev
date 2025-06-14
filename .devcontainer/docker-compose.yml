@@ -9,7 +9,7 @@ services:
     env_file:
       - dev.env
     volumes:
-    - devuser-home:/home/devuser
+      - devuser-home:/home/devuser
       - ../workspaces:/workspaces
       - ../.m2:/home/devuser/.m2:rw
       - /var/run/docker.sock:/var/run/docker.sock
