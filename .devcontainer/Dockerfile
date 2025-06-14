@@ -7,7 +7,7 @@ ENV SDKMAN_DIR="/root/.sdkman"
 # Install base tools
 RUN apt-get update && apt-get install -y \
     curl wget zip unzip git gnupg lsb-release ca-certificates \
-    python3 python3-pip \
+    python3 python3-pip python3-venv python3-full \
     nodejs npm \
     openssl \
 #    xmllint \
@@ -73,15 +73,18 @@ RUN echo 'source "$SDKMAN_DIR/bin/sdkman-init.sh"' >> /root/.bashrc
 
 
 
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 COPY container/bin/ /usr/local/bin/
 COPY container/libexec /usr/local/libexec
 COPY container/entrypoint.d/ entrypoint.d/
-RUN chmod +x /usr/local/bin/*
+RUN chmod +x /usr/local/bin/* /usr/local/libexec/*
 
 EXPOSE 22
 
 USER devuser
+COPY --chown=devuser:devuser container/home/  /home/devuser/
+RUN find /home/devuser/ -name *sh -o -name *py | xargs chmod +x
 
+WORKDIR /home/devuser
 
+# Set the entrypoint script
 CMD ["/usr/local/bin/entrypoint.sh"]

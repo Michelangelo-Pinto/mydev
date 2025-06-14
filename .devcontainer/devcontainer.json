@@ -1,7 +1,7 @@
 {
     "name": "Dev Container - Maven + Nexus",
     "dockerComposeFile": "docker-compose.yml",
-    "workspaceFolder": "/workspaces",
+    "workspaceFolder": "/home/devuser/workspace",
     "remoteUser": "devuser",
     "service": "dev",
 //    "postCreateCommand": "bash /workspaces/my-project/.devcontainer/postCreateCommand.sh",
