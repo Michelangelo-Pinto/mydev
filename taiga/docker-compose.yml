@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  taiga-back:
+    image: taigaio/taiga-back:latest
+    environment:
+      - POSTGRES_DB=taiga
+      - POSTGRES_USER=taiga
+      - POSTGRES_PASSWORD=taiga
+    depends_on:
+      - taiga-db
+    ports:
+      - "8000:8000"
+
+  taiga-db:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: taiga
+      POSTGRES_USER: taiga
+      POSTGRES_PASSWORD: taiga
+    volumes:
+      - taiga-db-data:/var/lib/postgresql/data
+
+  taiga-front:
+    image: taigaio/taiga-front:latest
+    ports:
+      - "9000:80"
+    depends_on:
+      - taiga-back
+
+volumes:
+  taiga-db-data:
