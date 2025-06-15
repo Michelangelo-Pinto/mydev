@@ -5,6 +5,14 @@
     "remoteUser": "devuser",
     "service": "dev",
 //    "postCreateCommand": "bash /workspaces/my-project/.devcontainer/postCreateCommand.sh",
+// for podman start
+//    "mounts": [
+//      "type=npipe,source=//./pipe/docker_engine,target=/var/run/docker.sock"
+//    ],
+//    "containerEnv": {
+//      "DOCKER_HOST": "unix:///var/run/docker.sock"
+//    },
+    //for podman end
     "customizations": {
       "vscode": {
         "extensions": [
