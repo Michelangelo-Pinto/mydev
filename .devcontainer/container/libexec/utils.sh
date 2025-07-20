@@ -16,11 +16,10 @@ check_required_vars() {
   fi
 
   for var in "$@"; do
-    if [[ -z "${!var:-}" ]]; 
+    if [[ -z "${!var:-}" ]]; then
       log_warning "[$context] The variable $var is not set."
       missing=true
-    fi
-    if [[ -n "${!var+x}" && -z "${!var}" ]]; then
+    elif [[ -n "${!var+x}" && -z "${!var}" ]]; then
       log_warning "[$context] The variable $var is set but empty."
     fi
   done

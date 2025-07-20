@@ -36,8 +36,9 @@ RUN mkdir -p /etc/apt/keyrings && \
 # Install SDKMAN and Java + Maven
 RUN curl -s "https://get.sdkman.io" | bash && \
     bash -c "source $SDKMAN_DIR/bin/sdkman-init.sh && \
-      sdk install java 21.0.7-graal && \
-      sdk default java 21.0.7-graal && \
+      sdk install java 25.ea.26-graal && \
+      sdk install java 24.0.1-graalce && \
+      sdk default java 24.0.1-graalce && \
       sdk flush archives"
 #      sdk install java 21.0.7-sem && \
 #      sdk install java 21.0.7-tem && \
