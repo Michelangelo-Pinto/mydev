@@ -1,1 +1,1 @@
-sudo /usr/sbin/sshd 
+/usr/sbin/sshd 

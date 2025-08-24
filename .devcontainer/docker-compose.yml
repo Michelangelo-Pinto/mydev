@@ -5,13 +5,13 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    working_dir: /home/devuser/workspace
+    working_dir: /root/workspace
     env_file:
       - dev.env
     volumes:
-      - devuser-home:/home/devuser
-      - ../workspace:/home/devuser/workspace
-      - ../.m2:/home/devuser/.m2:rw
+      - root-home:/home/root
+      - ../workspace:/root/workspace
+      #- ../.m2:/root/.m2:rw
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "2222:22"
@@ -21,4 +21,4 @@ services:
 #TODO .m2 is mounted as root 777. we don't like this
 
 volumes:
-  devuser-home:
+  root-home:

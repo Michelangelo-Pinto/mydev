@@ -33,6 +33,12 @@ RUN mkdir -p /etc/apt/keyrings && \
     apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 
 
+
+
+
+#RUN apt-get update && apt-get install -y maven
+
+
 # Install SDKMAN and Java + Maven
 RUN curl -s "https://get.sdkman.io" | bash && \
     bash -c "source $SDKMAN_DIR/bin/sdkman-init.sh && \
@@ -45,17 +51,26 @@ RUN curl -s "https://get.sdkman.io" | bash && \
 #      sdk install java 21.0.2-open && \
 #      sdk install java 21.0.2-graalce && \
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV MAVEN_VERSION=3.9.11
+ENV MAVEN_HOME=/opt/maven
+ENV PATH="${MAVEN_HOME}/bin:${PATH}"
+
+RUN apt-get update && apt-get install -y \
+ && curl -fsSL https://downloads.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz | tar -xz -C /opt \
+ && ln -s /opt/apache-maven-${MAVEN_VERSION} ${MAVEN_HOME} \
+ && rm -rf /var/lib/apt/lists/*
 
 
-RUN apt-get update && apt-get install -y maven
+
 
 # ----------------------------------------------------
 # Create non-root user with sudo permissions
 # ----------------------------------------------------
-RUN useradd -ms /bin/bash devuser && \
-    echo "devuser:default" | chpasswd && \
-    usermod -aG docker devuser && \
-    echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+#RUN useradd -ms /bin/bash devuser && \
+#    echo "devuser:default" | chpasswd && \
+#    usermod -aG docker devuser && \
+#    echo "devuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 
 # Crea gruppo docker e utente dev
@@ -81,11 +96,13 @@ RUN chmod +x /usr/local/bin/* /usr/local/libexec/*
 
 EXPOSE 22
 
-USER devuser
-COPY --chown=devuser:devuser container/home/  /home/devuser/
-RUN find /home/devuser/ -name *sh -o -name *py | xargs chmod +x
+COPY container/home/  /home/devuser/
+RUN find /root -name *sh -o -name *py | xargs chmod +x
 
-WORKDIR /home/devuser
+RUN echo "root:toor" | chpasswd
+
+
+WORKDIR /root
 
 # Set the entrypoint script
 CMD ["/usr/local/bin/entrypoint.sh"]
